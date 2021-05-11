@@ -12,6 +12,9 @@
     "-manager",
     "cloud"
   ],
+  "engines": {
+    "node": "10.x"
+  },
   "author": "Chaitu",
   "license": "ISC",
   "dependencies": {
