@@ -1,50 +1,23 @@
 const mongoose = require("mongoose");
 const config = require('config');
 const Grid = require("gridfs-stream");
-const multer = require('multer');
-const GridFsStorage = require('multer-gridfs-storage');
-const crypto = require('crypto');
-const express = require('express');
-const route = express.Router();
 
 const conn = mongoose.createConnection(config.get('DB_STRING'), {
   useNewUrlParser: true,
   useUnifiedTopology: true,
   useCreateIndex: true,
 });
-
+// Init gfs
 conn.once("open", () => {
-  gfs = Grid(conn.db, mongoose.mongo);
+  gfs = Grid(conn.db, mongoose.mongo,{useNewUrlParser:true,useUnifiedTopology:true});
   gfs.collection("uploads");
 });
 
-const storage = new GridFsStorage({
-  url: mongoURI,
-  file: (req, file) => {
-    return new Promise((resolve, reject) => {
-      crypto.randomBytes(16, (err, buf) => {
-        if (err) {
-          return reject(err);
-        }
-        const filename = buf.toString('hex') + path.extname(file.originalname);
-        const fileInfo = {
-          filename: filename,
-          bucketName: 'uploads'
-        };
-        resolve(fileInfo);
-      });
-    });
-  }
-});
-
-const upload = multer({ storage });
-
-route.post('/upload', upload.single('file'), (req, res) => {
-  res.json({ file: req.file });
-  // res.redirect('/');
-});
-
-  route.get('/api/getfiles', (req, res) => {
+module.exports = {
+  uploadFile: (req, res) => {
+    res.json({ file: req.file });
+  },
+  getAllFiles: (req, res) => {
     gfs.files.find().toArray((err, files) => {
       // Check if files
       if (!files || files.length === 0) {

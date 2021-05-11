@@ -1,0 +1,4 @@
+{
+    "DB_STRING":"mongodb+srv://chaitu:Iamfine@420@cluster0.jk33l.mongodb.net/FileMDB?retryWrites=true&w=majority",
+    "JWT_TOKEN" : "12345"
+}

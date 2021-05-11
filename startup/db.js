@@ -2,14 +2,12 @@ const mongoose = require('mongoose');
 const config = require('config');
 
 function con(){
-    console.log('function called')
     try{
-        const conn = mongoose.createConnection("mongodb://localhost:27017/vidly", {
+        mongoose.connect(config.get('DB_STRING'), {
             useNewUrlParser: true,
             useUnifiedTopology: true
           });
-        console.log('Connected to DB',conn);
-        conn.on('conne', () => console.log('Fucked'))
+        console.log('Connected to DB');
     }
     catch(err)
     {

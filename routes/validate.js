@@ -10,7 +10,7 @@ route.post("/", async (req, res) => {
   try {
     const decode = await jwt.verify(token, config.get("JWT_TOKEN"));
     if (decode) {
-      const user = await User.findOne({ _id: decode.id }, { username: "1" });
+      const user = await User.findOne({ _id: decode.id });
       if (user) res.json(user);
       else return res.status(401).json({ message: "User not found" });
     } else return res.status(400).json({ message: "FAILED" });

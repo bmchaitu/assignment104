@@ -22,7 +22,7 @@ route.post("/", async (req, res) => {
       res.json({token, username:user.username});
     }
   } catch (err) {
-    res.status(500).json({"message":err.message});
+    res.status(500).json({"message":err.response.data.message});
   }
 });
 
